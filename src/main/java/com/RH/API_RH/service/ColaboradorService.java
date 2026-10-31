@@ -41,7 +41,12 @@ public class ColaboradorService {
                 if (atributos.containsKey("salario")) colaborador.setSalario((String) atributos.get("salario"));
                 if (atributos.containsKey("cargo")) colaborador.setCargo((String) atributos.get("cargo"));
                 if (atributos.containsKey("cargoConfianca")) colaborador.setCargoConfianca((String) atributos.get("cargoConfianca"));
-                if (atributos.containsKey("dataAdmissao")) colaborador.setDataAdmissao((LocalDate) atributos.get("dataAdmissao"));
+                if (atributos.containsKey("dataAdmissao")) colaborador.setDataAdmissao(LocalDate.parse((String) atributos.get("dataAdmissao")));
+                if (atributos.containsKey("dataDesligamento")) colaborador.setDataDesligamento(LocalDate.parse((String) atributos.get("dataDesligamento")));
+                if (atributos.containsKey("dataInicioFerio")) colaborador.setDataInicioFerio(LocalDate.parse((String) atributos.get("dataInicioFerio")));
+                if (atributos.containsKey("dataFimFerias")) colaborador.setDataFimFerias(LocalDate.parse((String) atributos.get("dataFimFerias")));
+                if (atributos.containsKey("dataInicioAfastamento")) colaborador.setDataInicioAfastamento(LocalDate.parse((String) atributos.get("dataInicioAfastamento")));
+                if (atributos.containsKey("dataFimAfastamento")) colaborador.setDataFimAfastamento(LocalDate.parse((String) atributos.get("dataFimAfastamento")));
                 colaborador.setDataModificacao(LocalDateTime.now());
             }
             return this.colaboradorRepository.save(colaborador);
