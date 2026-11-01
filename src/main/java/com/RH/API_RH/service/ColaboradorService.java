@@ -43,7 +43,7 @@ public class ColaboradorService {
                 if (atributos.containsKey("cargoConfianca")) colaborador.setCargoConfianca((String) atributos.get("cargoConfianca"));
                 if (atributos.containsKey("dataAdmissao")) colaborador.setDataAdmissao(LocalDate.parse((String) atributos.get("dataAdmissao")));
                 if (atributos.containsKey("dataDesligamento")) colaborador.setDataDesligamento(LocalDate.parse((String) atributos.get("dataDesligamento")));
-                if (atributos.containsKey("dataInicioFerio")) colaborador.setDataInicioFerio(LocalDate.parse((String) atributos.get("dataInicioFerio")));
+                if (atributos.containsKey("dataInicioFerio")) colaborador.setDataInicioFerias(LocalDate.parse((String) atributos.get("dataInicioFerio")));
                 if (atributos.containsKey("dataFimFerias")) colaborador.setDataFimFerias(LocalDate.parse((String) atributos.get("dataFimFerias")));
                 if (atributos.containsKey("dataInicioAfastamento")) colaborador.setDataInicioAfastamento(LocalDate.parse((String) atributos.get("dataInicioAfastamento")));
                 if (atributos.containsKey("dataFimAfastamento")) colaborador.setDataFimAfastamento(LocalDate.parse((String) atributos.get("dataFimAfastamento")));
@@ -54,4 +54,32 @@ public class ColaboradorService {
             return null;
         }
     }
+
+    public Colaborador atualizarColaboradorPut(Long id, Colaborador colaboradorDados) {
+        try {
+            Colaborador colaborador = this.colaboradorRepository.findById(id).get();
+            System.out.println("Chegou no findById" + colaborador);
+            if (colaborador != null){
+                colaborador.setNomeCompleto(colaboradorDados.getNomeCompleto());
+                colaborador.setIdade(colaboradorDados.getIdade());
+                colaborador.setSexo(colaboradorDados.getSexo());
+                colaborador.setCidade(colaboradorDados.getCidade());
+                colaborador.setSalario(colaboradorDados.getSalario());
+                colaborador.setCargo(colaboradorDados.getCargo());
+                colaborador.setDataAdmissao(colaboradorDados.getDataAdmissao());
+                colaborador.setDataDesligamento(colaboradorDados.getDataDesligamento());
+                colaborador.setDataInicioFerias(colaboradorDados.getDataInicioFerias());
+                colaborador.setDataFimFerias(colaboradorDados.getDataFimFerias());
+                colaborador.setDataInicioAfastamento(colaboradorDados.getDataInicioAfastamento());
+                colaborador.setDataFimAfastamento(colaboradorDados.getDataFimAfastamento());
+                colaborador.setCargo(colaboradorDados.getCargo());
+                colaborador.setCargoConfianca(colaboradorDados.getCargoConfianca());
+                colaborador.setDataModificacao(LocalDateTime.now());
+            }
+            return this.colaboradorRepository.save(colaborador);
+        } catch (Exception e){
+            return null;
+        }
+    }
+
 }

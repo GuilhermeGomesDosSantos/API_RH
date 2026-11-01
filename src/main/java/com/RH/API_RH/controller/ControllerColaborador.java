@@ -1,6 +1,7 @@
 package com.RH.API_RH.controller;
 
 import com.RH.API_RH.entity.Colaborador;
+import com.RH.API_RH.repository.ColaboradorRepository;
 import com.RH.API_RH.service.ColaboradorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -10,12 +11,16 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 @RestController
 @RequestMapping("api/colaborador/")
 public class ControllerColaborador {
     @Autowired
     ColaboradorService colaboradorService;
+
+    @Autowired
+    ColaboradorRepository colaboradorRepository;
 
     @GetMapping("/testConnection")
     public ResponseEntity<String> testConnection(){
@@ -53,6 +58,26 @@ public class ControllerColaborador {
         try {
             Colaborador verificarColaborador = this.colaboradorService.atualizarColaborador(id, atributos);
             return new ResponseEntity<>((HttpHeaders) null, HttpStatus.OK);
+        } catch (Exception e){
+            return new ResponseEntity<>((HttpHeaders) null, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PutMapping("atualizar/{id}")
+    public ResponseEntity<Colaborador> atualizarColaboradorPut(@PathVariable Long id, @RequestBody Colaborador colaboradorDados){
+        try {
+            Colaborador verificarColaborador = this.colaboradorService.atualizarColaboradorPut(id, colaboradorDados);
+            return new ResponseEntity<>((HttpHeaders) null, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>((HttpHeaders) null, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @DeleteMapping("deletar/{id}")
+    public ResponseEntity deletarColaborador(@PathVariable Long id){
+        try {
+            colaboradorRepository.deleteById(id);
+            return new ResponseEntity<>((HttpHeaders) null, HttpStatus.NO_CONTENT);
         } catch (Exception e){
             return new ResponseEntity<>((HttpHeaders) null, HttpStatus.BAD_REQUEST);
         }

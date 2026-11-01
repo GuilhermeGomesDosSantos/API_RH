@@ -20,14 +20,14 @@ public class Colaborador {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nomeCompleto;
-    private int idade;
+    private Integer idade;
     private String sexo;
     private String cidade;
     private String salario;
     private String cargo;
     private LocalDate dataAdmissao;
     private LocalDate dataDesligamento;
-    private LocalDate dataInicioFerio;
+    private LocalDate dataInicioFerias;
     private LocalDate dataFimFerias;
     private LocalDate dataInicioAfastamento;
     private LocalDate dataFimAfastamento;
