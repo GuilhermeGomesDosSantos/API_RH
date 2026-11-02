@@ -35,6 +35,7 @@ public class ColaboradorService {
         try {
             Colaborador colaborador = this.colaboradorRepository.findById(id).get();
             if (colaborador != null) {
+                if (atributos.containsKey("nomeCompleto")) colaborador.setNomeCompleto((String) atributos.get("nomeCompleto"));
                 if (atributos.containsKey("idade")) colaborador.setIdade((Integer) atributos.get("idade"));
                 if (atributos.containsKey("sexo")) colaborador.setSexo((String) atributos.get("sexo"));
                 if (atributos.containsKey("cidade")) colaborador.setCidade((String) atributos.get("cidade"));

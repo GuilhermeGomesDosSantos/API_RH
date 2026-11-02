@@ -39,9 +39,9 @@ public class ControllerColaborador {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<String> findByIdColaborador(@PathVariable long id){
+    public ResponseEntity<colaboradorDTO> findByIdColaborador(@PathVariable long id){
             Colaborador colaboradorId = this.colaboradorService.getByIdColaborador(id);
-            return new ResponseEntity<>("Colaborador Encontrado", HttpStatus.OK);
+            return ResponseEntity.ok().body(new colaboradorDTO(colaboradorId));
     }
 
     @GetMapping("/allColaboradores")
@@ -55,32 +55,20 @@ public class ControllerColaborador {
     }
 
     @PatchMapping("/atualizar/{id}")
-    public ResponseEntity<Colaborador> atualizarColaborador(@PathVariable Long id, @RequestBody Map<String, Object> atributos){
-        try {
-            Colaborador verificarColaborador = this.colaboradorService.atualizarColaborador(id, atributos);
-            return new ResponseEntity<>((HttpHeaders) null, HttpStatus.OK);
-        } catch (Exception e){
-            return new ResponseEntity<>((HttpHeaders) null, HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<colaboradorDTO> atualizarColaborador(@PathVariable Long id, @RequestBody Map<String, Object> atributos){
+            Colaborador atualizarColaborador = this.colaboradorService.atualizarColaborador(id, atributos);
+            return ResponseEntity.accepted().body(new colaboradorDTO(atualizarColaborador));
     }
 
-    @PutMapping("atualizar/{id}")
-    public ResponseEntity<Colaborador> atualizarColaboradorPut(@PathVariable Long id, @RequestBody Colaborador colaboradorDados){
-        try {
-            Colaborador verificarColaborador = this.colaboradorService.atualizarColaboradorPut(id, colaboradorDados);
-            return new ResponseEntity<>((HttpHeaders) null, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>((HttpHeaders) null, HttpStatus.BAD_REQUEST);
-        }
+    @PutMapping("/atualizar/{id}")
+    public ResponseEntity<colaboradorDTO> atualizarColaboradorPut(@PathVariable Long id, @RequestBody Colaborador colaboradorDados){
+            Colaborador atualizarColaborador = this.colaboradorService.atualizarColaboradorPut(id, colaboradorDados);
+            return ResponseEntity.accepted().body(new colaboradorDTO(atualizarColaborador));
     }
 
     @DeleteMapping("deletar/{id}")
     public ResponseEntity deletarColaborador(@PathVariable Long id){
-        try {
             colaboradorRepository.deleteById(id);
-            return new ResponseEntity<>((HttpHeaders) null, HttpStatus.NO_CONTENT);
-        } catch (Exception e){
-            return new ResponseEntity<>((HttpHeaders) null, HttpStatus.BAD_REQUEST);
-        }
+            return new ResponseEntity<>((HttpStatus) null, HttpStatus.NO_CONTENT);
     }
 }
