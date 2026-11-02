@@ -1,5 +1,6 @@
 package com.RH.API_RH.controller;
 
+import com.RH.API_RH.DTOs.colaboradorDTO;
 import com.RH.API_RH.entity.Colaborador;
 import com.RH.API_RH.repository.ColaboradorRepository;
 import com.RH.API_RH.service.ColaboradorService;
@@ -8,6 +9,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 import java.util.Map;
@@ -28,13 +31,11 @@ public class ControllerColaborador {
     }
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<String> cadastrarColaborador(@RequestBody Colaborador colaborador){
-        try {
-            String cadastrarColaborador = this.colaboradorService.save(colaborador);
-            return new ResponseEntity<>(cadastrarColaborador, HttpStatus.CREATED);
-        } catch (Exception e){
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<colaboradorDTO> cadastrarColaborador(@RequestBody Colaborador colaborador, UriComponentsBuilder uriComponentsBuilder){
+            var newColaborador = this.colaboradorRepository.save(colaborador);
+
+            var uri = uriComponentsBuilder.path("api/colaborador/{id}").buildAndExpand(newColaborador.getId()).toUri();
+            return ResponseEntity.created(uri).body(new colaboradorDTO(colaborador));
     }
 
     @GetMapping("/{id}")
