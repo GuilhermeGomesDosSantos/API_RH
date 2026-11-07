@@ -43,7 +43,7 @@ class ApiRhApplicationTests {
 	void cenario02_findById(){
 		Long id = 10L;
 
-//		NoSuchElementException exception = assertThrows(NoSuchElementException.class, ()-> this.colaboradorService.getByIdColaborador(id));
+//		ApiErrorResponseNoSuchElementException exception = assertThrows(ApiErrorResponseNoSuchElementException.class, ()-> this.colaboradorService.getByIdColaborador(id));
 //		assertEquals("No value present", exception.getMessage());
 	assertThrows(NoSuchElementException.class, () -> this.colaboradorService.getByIdColaborador(id));
 	}
