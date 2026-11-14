@@ -4,6 +4,7 @@ import com.RH.API_RH.DTOs.colaboradorDTO;
 import com.RH.API_RH.entity.Colaborador;
 import com.RH.API_RH.repository.ColaboradorRepository;
 import com.RH.API_RH.service.ColaboradorService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -31,7 +32,7 @@ public class ControllerColaborador {
     }
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<colaboradorDTO> cadastrarColaborador(@RequestBody Colaborador colaborador, UriComponentsBuilder uriComponentsBuilder){
+    public ResponseEntity<colaboradorDTO> cadastrarColaborador(@RequestBody @Valid Colaborador colaborador, UriComponentsBuilder uriComponentsBuilder){
             var newColaborador = this.colaboradorRepository.save(colaborador);
 
             var uri = uriComponentsBuilder.path("api/colaborador/{id}").buildAndExpand(newColaborador.getId()).toUri();

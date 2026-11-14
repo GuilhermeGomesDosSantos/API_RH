@@ -1,6 +1,8 @@
 package com.RH.API_RH.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,11 +21,17 @@ public class Colaborador {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotBlank(message = "the nomeCompleto field is can't be null")
     private String nomeCompleto;
+    @NotNull(message = "The idade field is can't be null")
     private Integer idade;
+    @NotBlank(message = "The sexo field is can't be null")
     private String sexo;
+    @NotBlank(message = "The cidade field is can't be null")
     private String cidade;
+    @NotBlank(message = "The salario field is can't be null")
     private String salario;
+    @NotBlank(message = "The cargo field is can't be null")
     private String cargo;
     private LocalDate dataAdmissao;
     private LocalDate dataDesligamento;
@@ -38,5 +46,8 @@ public class Colaborador {
     @PrePersist
     public void prePersist(){
         this.dataDeCadastro = LocalDateTime.now();
+        if(this.getCargoConfianca().isBlank()){
+            this.setCargoConfianca("NAO");
+        }
     }
 }

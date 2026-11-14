@@ -1,15 +1,19 @@
 package com.RH.API_RH.exception.exceptionApiError;
 
 import com.RH.API_RH.exception.exceptionApiError.DtoExeption.ApiErrorResponseException;
+import com.RH.API_RH.exception.exceptionApiError.DtoExeption.ApiErrorResponseExceptionCadastrar;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 @RestControllerAdvice
@@ -39,5 +43,16 @@ public class apiErrorException {
         }
         System.out.println(exception.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiErrorResponseException(LocalDateTime.now(), HttpStatus.BAD_REQUEST, HttpStatus.BAD_REQUEST.getReasonPhrase(), message));
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ApiErrorResponseExceptionCadastrar> error_400_method_argument(MethodArgumentNotValidException exception){
+
+        Map<String, String> erros = new HashMap<>();
+        exception.getBindingResult().getFieldErrors().forEach(error -> erros.put(error.getField(), error.getDefaultMessage()));
+        System.out.println(exception.getMessage());
+
+        String messageError = exception.getMessage().substring(0, 30);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiErrorResponseExceptionCadastrar(LocalDateTime.now(), HttpStatus.BAD_REQUEST, messageError, erros));
     }
 }
