@@ -1,5 +1,6 @@
 package com.RH.API_RH;
 
+import com.RH.API_RH.DTOs.colaboradorDTO;
 import com.RH.API_RH.controller.ControllerColaborador;
 import com.RH.API_RH.entity.Colaborador;
 import com.RH.API_RH.repository.ColaboradorRepository;
@@ -26,7 +27,7 @@ public class ApiRhApplicationMockitoTests {
     @MockitoBean
     ColaboradorRepository colaboradorRepository;
 
-    @Autowired
+    @MockitoBean
     ColaboradorService colaboradorService;
 
     @Autowired
@@ -46,6 +47,7 @@ public class ApiRhApplicationMockitoTests {
 
         listaColaborador = new ArrayList<>();
         this.listaColaborador.add(colaborador);
+
     }
 
     @Test
@@ -79,5 +81,22 @@ public class ApiRhApplicationMockitoTests {
 
         assertEquals("Colaborador salvo com sucesso!", retorno);
 
+    }
+
+    @Test
+    void cenario_04_put_atualizar_colaborador(){
+        when(colaboradorService.atualizarColaboradorPut(1L, colaborador)).thenReturn(colaborador);
+
+        ResponseEntity<colaboradorDTO> retorno = controllerColaborador.atualizarColaboradorPut(1L, colaborador);
+
+        assertEquals(retorno.getStatusCode(), HttpStatus.ACCEPTED);
+    }
+
+    @Test
+    void cenario_05_delete_deletar_colaborador(){
+        ResponseEntity<String> retorno = controllerColaborador.deletarColaborador(1L);
+        System.out.println("Teste" + retorno.getStatusCode());
+
+        assertEquals(HttpStatus.NO_CONTENT, retorno.getStatusCode());
     }
 }
