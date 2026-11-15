@@ -41,7 +41,7 @@ class ApiRhApplicationTests {
 	@Test
 	@Description("Retorna é esperado erro ao não encontrar o ID informado")
 	void cenario02_findById(){
-		Long id = 10L;
+		Long id = 100L;
 
 //		ApiErrorResponseNoSuchElementException exception = assertThrows(ApiErrorResponseNoSuchElementException.class, ()-> this.colaboradorService.getByIdColaborador(id));
 //		assertEquals("No value present", exception.getMessage());
